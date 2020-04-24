@@ -5,10 +5,12 @@ const YAML = require('yamljs');
 const userRouter = require('./resources/users/user.router');
 
 const app = express();
+const animalRouter = require('./resources/animals/animals.router');
+
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
 app.use(express.json());
-
+app.use('/', animalRouter);
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.use('/', (req, res, next) => {
