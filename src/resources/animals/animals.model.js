@@ -15,4 +15,4 @@ const AnimalSchema = new Schema({
   }
 });
 // eslint-disable-next-line no-undef
-module.exports = Item = mongoose.model('animal', AnimalSchema);
+module.exports = Item = mongoose.model('animal', AnimalSchema, 'animals');
