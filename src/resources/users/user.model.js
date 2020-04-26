@@ -24,5 +24,6 @@ const UserSchema = new Schema(
   },
   { versionKey: false }
 );
+UserSchema.statics.toResponse = ({ id, name, login }) => ({ id, name, login });
 // eslint-disable-next-line no-undef
 module.exports = Item = mongoose.model('user', UserSchema, 'user');

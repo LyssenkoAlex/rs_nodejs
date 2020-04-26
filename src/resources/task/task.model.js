@@ -5,27 +5,22 @@ const Schema = mongoose.Schema;
 
 const TaskSchema = new Schema({
   title: {
-    type: String,
-    required: true
+    type: String
   },
   order: {
-    type: Number,
-    default: true
+    type: Number
   },
   description: {
-    type: String,
-    required: true
+    type: String
   },
   userId: {
     type: String
   },
   boardId: {
-    type: String,
-    required: true
+    type: String
   },
   columnId: {
-    type: String,
-    required: true
+    type: String
   },
   _id: {
     type: String,

@@ -1,18 +1,22 @@
 const usersRepo = require('./user.db');
+const User = require('./user.model');
 const tasksRepo = require('../task/task.db');
 
 const getAll = async () => {
   return await usersRepo.getAll();
 };
 const createUser = async (data) => {
-  return await usersRepo.createUser(data);
+  const user = await usersRepo.createUser(data);
+  return User.toResponse(user);
 };
 
 const updateUser = async (id, data) => {
-  return await usersRepo.updateUser(id, data);
+  const isUpdate = (await User.updateOne({ _id: id }, data)).ok;
+  return isUpdate === 1 ? data : undefined;
 };
 const getUserById = async (id) => {
-  return await usersRepo.getUserById(id);
+  const user = usersRepo.getUserById(id);
+  return User.toResponse(user);
 };
 
 const deleteUser = async (id) => {

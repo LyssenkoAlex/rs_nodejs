@@ -13,11 +13,13 @@ const updateUser = async (id, user) => {
 };
 
 const getUserById = async (id) => {
-  return await User.findOne({ _id: id }).exec();
+  const user = await User.findOne({ _id: id }).exec();
+  return user !== null ? user : undefined;
 };
 
 const deleteUser = async (id) => {
-  return await User.deleteOne({ _id: id }).exec();
+  console.log('deleteOne: ', id);
+  return await User.deleteOne({ _id: id });
 };
 
 module.exports = { getAll, createUser, updateUser, getUserById, deleteUser };

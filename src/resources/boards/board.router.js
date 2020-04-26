@@ -21,6 +21,17 @@ router.route('/:boardId').put(async (req, res) => {
   return res.json(updateBoard);
 });
 
+router.route('/:boardId/tasks/:taskId').put(async (req, res) => {
+  const task = await tasksService.getTaskById(req.params.taskId);
+  const updateTask = await tasksService.updateTask(task.id, req.body);
+  return res.json(updateTask);
+});
+
+router.route('/:boardId/tasks/:taskId').delete(async (req, res) => {
+  const task = await tasksService.deleteTask(req.params.taskId);
+  return res.json(task);
+});
+
 router.route('/:taskId').get(async (req, res) => {
   const { taskId } = req.params;
   const taskById = await boardsService.getBoardById(taskId);

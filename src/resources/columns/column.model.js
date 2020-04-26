@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
+const uuid = require('uuid/v4');
 
 const Schema = mongoose.Schema;
 
 const ColumnSchema = new Schema({
-  id: {
+  _id: {
     type: String,
-    required: true
+    default: uuid
   },
   title: {
     type: String,
