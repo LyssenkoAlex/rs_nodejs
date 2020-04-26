@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const uuid = require('uuid/v4');
 
 const Schema = mongoose.Schema;
 
@@ -8,7 +9,7 @@ const TaskSchema = new Schema({
     required: true
   },
   order: {
-    type: Boolean,
+    type: Number,
     default: true
   },
   description: {
@@ -25,6 +26,10 @@ const TaskSchema = new Schema({
   columnId: {
     type: String,
     required: true
+  },
+  _id: {
+    type: String,
+    default: uuid
   }
 });
 // eslint-disable-next-line no-undef
