@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const uuid = require('uuid');
+const uuid = require('uuid/v4');
 
 const Schema = mongoose.Schema;
 
@@ -14,7 +14,6 @@ const BoardSchema = new Schema({
   },
   _id: {
     type: String,
-    required: true,
     default: uuid
   }
 });
