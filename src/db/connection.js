@@ -3,7 +3,10 @@ const config = require('../common/config');
 
 // mongoose.Promise = global.Promise;
 const connectToDB = (conn) => {
-  mongoose.connect(config.MONGO_CONNECTION_STRING);
+  mongoose.connect(config.MONGO_CONNECTION_STRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
 
   const db = mongoose.connection;
   // db.on('error', console.log('db connection error'))

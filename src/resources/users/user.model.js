@@ -1,25 +1,28 @@
-const uuid = require('uuid');
+const uuid = require('uuid/v4');
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
-  name: {
-    type: String,
-    required: true
+const UserSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true
+    },
+    login: {
+      type: String,
+      required: true
+    },
+    password: {
+      type: String,
+      required: true
+    },
+    _id: {
+      type: String,
+      default: uuid
+    }
   },
-  login: {
-    type: Boolean,
-    default: true
-  },
-  password: {
-    type: Date,
-    default: Date.now()
-  },
-  _id: {
-    type: String,
-    default: uuid
-  }
-});
+  { versionKey: false }
+);
 // eslint-disable-next-line no-undef
 module.exports = Item = mongoose.model('user', UserSchema, 'user');
