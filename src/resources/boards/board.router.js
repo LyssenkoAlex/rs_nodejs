@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { OK } = require('http-status-codes');
 const boardsService = require('./board.service');
 const tasksService = require('../task/task.service');
 
@@ -7,12 +8,11 @@ router.route('/').get(async (req, res) => {
   return res.json(items);
 });
 
-router.route('/:boardId').get(async (req, res) => {
+router.route('/:id').get(async (req, res) => {
   console.log('board req.params', req.params);
-  const { boardId } = req.params;
-  const board = await boardsService.getBoardById(boardId);
-
-  return res.json(board);
+  const { id } = req.params;
+  const board = await boardsService.getBoardById(id);
+  return res.status(OK).json(board);
 });
 
 router.route('/').post(async (req, res) => {
