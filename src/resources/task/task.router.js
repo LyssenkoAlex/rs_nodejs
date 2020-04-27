@@ -1,6 +1,11 @@
 const router = require('express').Router();
 const tasksService = require('./task.service');
-const { OK } = require('http-status-codes');
+const {
+  OK,
+  NOT_FOUND,
+  NO_CONTENT,
+  INTERNAL_SERVER_ERROR
+} = require('http-status-codes');
 
 router.route('/').get(async (req, res) => {
   const tasks = await tasksService.getAll();
@@ -8,14 +13,8 @@ router.route('/').get(async (req, res) => {
 });
 
 router.route('/').post(async (req, res) => {
-  const tasks = await tasksService.createTask({
-    title: req.body.title,
-    order: req.body.order,
-    description: req.body.description,
-    userId: req.body.userId,
-    boardId: req.body.boardId,
-    columnId: req.body.columnId
-  });
+  const taskFiled = req.body;
+  const tasks = await tasksService.createTask(taskFiled);
   return res.json(tasks);
 });
 
@@ -26,12 +25,20 @@ router.route('/:taskId').put(async (req, res) => {
 
 router.route('/:taskId').get(async (req, res) => {
   const taskById = await tasksService.getTaskById(req.params.taskId);
-  return res.json(taskById);
+  console.log('taskById', taskById);
+  if (taskById !== null) {
+    return res.json(taskById);
+  }
+
+  return res.status(NOT_FOUND);
 });
 
 router.route('/:taskId').delete(async (req, res) => {
-  const deleteTask = await tasksService.deleteTask(req.params.taskId);
-  return res.json(deleteTask);
+  const deleteTask = (await tasksService.deleteTask(req.params.taskId)).ok;
+  if (deleteTask) {
+    return res.status(NO_CONTENT);
+  }
+  return res.status(INTERNAL_SERVER_ERROR);
 });
 
 module.exports = router;

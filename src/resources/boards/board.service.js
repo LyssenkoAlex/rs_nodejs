@@ -17,7 +17,10 @@ const updateBoard = async (id, data) => {
 };
 const getBoardById = async (id) => {
   const board = await boardsRepo.getBoardById(id);
-  return Board.toResponse(board);
+  if (board !== null) {
+    return Board.toResponse(board);
+  }
+  return undefined;
 };
 
 const deleteBoard = async (id) => {

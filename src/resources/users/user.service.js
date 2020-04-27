@@ -4,7 +4,8 @@ const Task = require('../task/task.model');
 const tasksRepo = require('../task/task.db');
 
 const getAll = async () => {
-  return await usersRepo.getAll();
+  const users = await usersRepo.getAll();
+  return users.map(User.toResponse);
 };
 const createUser = async (data) => {
   const user = await usersRepo.createUser(data);
@@ -13,7 +14,7 @@ const createUser = async (data) => {
 
 const updateUser = async (id, data) => {
   const isUpdate = (await User.updateOne({ _id: id }, data)).ok;
-  return isUpdate === 1 ? data : undefined;
+  return isUpdate === 1 ? User.toResponse(data) : undefined;
 };
 const getUserById = async (id) => {
   const user = await usersRepo.getUserById(id);
@@ -25,8 +26,9 @@ const deleteUser = async (id) => {
   const userTasks = tasks.filter((item) => item.userId === id);
   const updateTasks = (await Task.updateMany({ userTasks, userId: null })).ok;
   if (updateTasks) {
-    return await usersRepo.deleteUser(id);
+    return (await usersRepo.deleteUser(id)).ok;
   }
+  return updateTasks;
 };
 
 module.exports = { getAll, createUser, updateUser, getUserById, deleteUser };

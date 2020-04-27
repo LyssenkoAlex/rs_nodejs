@@ -13,7 +13,7 @@ const updateBoard = async (id, board) => {
 };
 
 const getBoardById = async (id) => {
-  return await Boards.findById(id).exec();
+  return await Boards.findById(id);
 };
 
 const deleteBoard = async (id) => {

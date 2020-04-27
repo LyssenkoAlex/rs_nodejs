@@ -8,24 +8,24 @@ router.route('/').get(async (req, res) => {
 });
 
 router.route('/').post(async (req, res) => {
-  const users = await usersService.createUser({
-    name: req.body.name,
-    login: req.body.login,
-    password: req.body.password
-  });
+  const userFields = req.body;
+  const users = await usersService.createUser(userFields);
   return res.json(users);
 });
 
 router.route('/:userId').put(async (req, res) => {
-  const updateResult = await usersService.updateUser(
-    req.params.userId,
-    req.body
-  );
-  return res.json(updateResult);
+  const updateUser = req.body;
+  const { userId } = req.params;
+  const updateResult = await usersService.updateUser(userId, updateUser);
+  if (updateResult) {
+    return res.json(updateResult);
+  }
+  return res.status(INTERNAL_SERVER_ERROR).send();
 });
 
 router.route('/:userId').get(async (req, res) => {
-  const userById = await usersService.getUserById(req.params.userId);
+  const { userId } = req.params;
+  const userById = await usersService.getUserById(userId);
   if (userById === undefined) {
     throw new Error({ statusCode: NOT_FOUND, message: INTERNAL_SERVER_ERROR });
   }
@@ -34,12 +34,13 @@ router.route('/:userId').get(async (req, res) => {
 });
 
 router.route('/:userId').delete(async (req, res) => {
-  const deleteUser = await usersService.deleteUser(req.params.userId);
+  const { userId } = req.params;
+  const deleteUser = await usersService.deleteUser(userId);
   if (deleteUser) {
     return res.status(204).send();
   }
 
-  throw new Error({ statusCode: NOT_FOUND, message: INTERNAL_SERVER_ERROR });
+  return res.status(INTERNAL_SERVER_ERROR).send();
 });
 
 module.exports = router;
