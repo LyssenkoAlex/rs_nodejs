@@ -5,7 +5,7 @@ const tasksService = require('../task/task.service');
 
 router.route('/').get(async (req, res) => {
   const items = await boardsService.getAll();
-  return res.json(items);
+  return res.status(OK).json(items);
 });
 
 router.route('/:id').get(async (req, res) => {

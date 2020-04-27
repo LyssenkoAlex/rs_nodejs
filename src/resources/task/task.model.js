@@ -27,5 +27,23 @@ const TaskSchema = new Schema({
     default: uuid
   }
 });
+TaskSchema.statics.toResponse = ({
+  title,
+  order,
+  description,
+  userId,
+  boardId,
+  columnId,
+  id
+}) => ({
+  title,
+  order,
+  description,
+  userId,
+  boardId,
+  columnId,
+  id
+});
+
 // eslint-disable-next-line no-undef
 module.exports = Item = mongoose.model('task', TaskSchema, 'tasks');

@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const tasksService = require('./task.service');
+const { OK } = require('http-status-codes');
 
 router.route('/').get(async (req, res) => {
   const tasks = await tasksService.getAll();
-  return res.json(tasks);
+  return res.status(OK).json(tasks);
 });
 
 router.route('/').post(async (req, res) => {
