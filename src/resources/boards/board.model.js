@@ -17,5 +17,10 @@ const BoardSchema = new Schema({
     default: uuid
   }
 });
+BoardSchema.statics.toResponse = ({ title, columns, id }) => ({
+  title,
+  columns,
+  id
+});
 // eslint-disable-next-line no-undef
 module.exports = Item = mongoose.model('boards', BoardSchema, 'boards');

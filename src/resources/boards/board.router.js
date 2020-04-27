@@ -7,6 +7,14 @@ router.route('/').get(async (req, res) => {
   return res.json(items);
 });
 
+router.route('/:boardId').get(async (req, res) => {
+  console.log('board req.params', req.params);
+  const { boardId } = req.params;
+  const board = await boardsService.getBoardById(boardId);
+
+  return res.json(board);
+});
+
 router.route('/').post(async (req, res) => {
   const tasks = await boardsService.createBoard({
     title: req.body.title,

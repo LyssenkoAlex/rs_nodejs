@@ -27,8 +27,7 @@ router.route('/:userId').put(async (req, res) => {
 router.route('/:userId').get(async (req, res) => {
   const userById = await usersService.getUserById(req.params.userId);
   if (userById === undefined) {
-    // throw new Error(res.status(NOT_FOUND).send(INTERNAL_SERVER_ERROR));
-    return res.json({ statusCode: NOT_FOUND, message: INTERNAL_SERVER_ERROR });
+    throw new Error({ statusCode: NOT_FOUND, message: INTERNAL_SERVER_ERROR });
   }
 
   return res.json(userById);
@@ -36,7 +35,11 @@ router.route('/:userId').get(async (req, res) => {
 
 router.route('/:userId').delete(async (req, res) => {
   const deleteUser = await usersService.deleteUser(req.params.userId);
-  return res.json(deleteUser);
+  if (deleteUser) {
+    return res.status(204).send();
+  }
+
+  throw new Error({ statusCode: NOT_FOUND, message: INTERNAL_SERVER_ERROR });
 });
 
 module.exports = router;

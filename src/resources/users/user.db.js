@@ -18,8 +18,7 @@ const getUserById = async (id) => {
 };
 
 const deleteUser = async (id) => {
-  console.log('deleteOne: ', id);
-  return await User.deleteOne({ _id: id });
+  return (await User.deleteOne({ _id: id })).ok;
 };
 
 module.exports = { getAll, createUser, updateUser, getUserById, deleteUser };
