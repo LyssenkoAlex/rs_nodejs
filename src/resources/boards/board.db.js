@@ -1,7 +1,7 @@
 const Boards = require('./board.model');
 
 const getAll = async () => {
-  return await Boards.find({}).exec();
+  return await Boards.find({});
 };
 
 const createBoard = async (board) => {
@@ -13,7 +13,7 @@ const updateBoard = async (id, board) => {
 };
 
 const getBoardById = async (id) => {
-  return await Boards.findOne({ _id: id }).exec();
+  return await Boards.findById(id).exec();
 };
 
 const deleteBoard = async (id) => {

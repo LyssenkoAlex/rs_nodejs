@@ -3,20 +3,20 @@ const tasksRepo = require('../task/task.db');
 const Board = require('./board.model.js');
 
 const getAll = async () => {
-  return await boardsRepo.getAll();
+  const boards = await boardsRepo.getAll();
+  return boards.map(Board.toResponse);
 };
 
 const createBoard = async (data) => {
-  return await boardsRepo.createBoard(data);
+  const newBoard = await boardsRepo.createBoard(data);
+  return Board.toResponse(newBoard);
 };
 
 const updateBoard = async (id, data) => {
   return await boardsRepo.updateBoard(id, data);
 };
 const getBoardById = async (id) => {
-  console.log('id: ', id);
   const board = await boardsRepo.getBoardById(id);
-  console.log('board: ', board);
   return Board.toResponse(board);
 };
 

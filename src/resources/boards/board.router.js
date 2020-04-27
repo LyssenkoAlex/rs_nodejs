@@ -16,17 +16,15 @@ router.route('/:id').get(async (req, res) => {
 });
 
 router.route('/').post(async (req, res) => {
-  const tasks = await boardsService.createBoard({
-    title: req.body.title,
-    columns: req.body.columns
-  });
-  return res.json(tasks);
+  const boardFields = req.body;
+  const board = await boardsService.createBoard(boardFields);
+  return res.status(OK).json(board);
 });
 
 router.route('/:boardId').put(async (req, res) => {
   const { boardId } = req.params;
   const updateBoard = await boardsService.updateBoard(boardId, req.body);
-  return res.json(updateBoard);
+  return res.status(OK).json(updateBoard);
 });
 
 router.route('/:boardId/tasks/:taskId').put(async (req, res) => {
